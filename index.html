@@ -3,43 +3,45 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mieszkania</title>
+    <title>Mieszkania | Panel Analityczny</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<main class="app-container">
-    <section id="map-section">
+<div class="app-container">
+    <aside class="map-wrapper">
         <div id="map"></div>
-    </section>
+    </aside>
 
-    <section id="list-section">
-        <div class="table-wrapper">
-            <table id="flats-table">
+    <main class="data-wrapper">
+        <div class="table-container">
+            <table>
                 <thead>
-                <tr class="column-names">
-                    <th>Cena</th>
-                    <th>Cena/m²</th>
-                    <th>Powierzchnia</th>
-                    <th>Dzielnica</th>
-                    <th>Pokoje</th>
-                    <th>Telefon</th>
-                    <th>Link</th>
+                <tr class="header-labels">
+                    <th style="width: 140px">Cena</th>
+                    <th style="width: 120px">Cena / m²</th>
+                    <th style="width: 100px">Powierzchnia</th>
+                    <th>Dzielnica / Okolica</th>
+                    <th style="width: 90px">Pokoje</th>
+                    <th style="width: 140px">Telefon</th>
+                    <th style="width: 100px">Akcja</th>
                 </tr>
-                <tr class="filter-row">
-                    <td><input type="number" id="f-price" placeholder="Max cena..."></td>
-                    <td></td> <td><input type="number" id="f-sqm" placeholder="Min m²..."></td>
-                    <td><input type="text" id="f-area" placeholder="Szukaj dzielnicy..."></td>
-                    <td><input type="number" id="f-rooms" placeholder="Min pokoi..."></td>
-                    <td></td>
-                    <td><button id="reset-filters">Reset</button></td>
+                <tr class="header-filters">
+                    <th><input type="number" id="f-price" placeholder="Max PLN..."></th>
+                    <th></th> <th><input type="number" id="f-sqm" placeholder="Min m²..."></th>
+                    <th><input type="text" id="f-area" placeholder="Szukaj lokalizacji..."></th>
+                    <th><input type="number" id="f-rooms" placeholder="Min..."></th>
+                    <th></th>
+                    <th><button id="reset-filters">Resetuj</button></th>
                 </tr>
                 </thead>
-                <tbody id="tbody"></tbody>
+                <tbody id="tbody">
+                </tbody>
             </table>
         </div>
-    </section>
-</main>
+    </main>
+</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="./data.js"></script>
