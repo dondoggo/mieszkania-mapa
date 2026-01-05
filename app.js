@@ -1,85 +1,70 @@
 (function () {
     const flats = Array.isArray(window.FLATS) ? window.FLATS : [];
-
-    const filters = {
-        price: document.getElementById("f-price"),
-        sqm: document.getElementById("f-sqm"),
-        area: document.getElementById("f-area"),
-        rooms: document.getElementById("f-rooms")
-    };
-    const elReset = document.getElementById("reset-filters");
     const elTbody = document.getElementById("tbody");
 
-    // Mapa z ładniejszym, jasnym stylem
+    // Mapa
     const map = L.map("map").setView([52.2297, 21.0122], 12);
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-        attribution: '&copy; CartoDB'
-    }).addTo(map);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png').addTo(map);
+    const markers = L.layerGroup().addTo(map);
 
-    const markersLayer = L.layerGroup().addTo(map);
-
-    // Renderowanie
     function render() {
-        const filtered = flats.filter(x => {
-            const fPrice = parseFloat(filters.price.value);
-            const fSqm = parseFloat(filters.sqm.value);
-            const fArea = filters.area.value.toLowerCase();
-            const fRooms = parseInt(filters.rooms.value);
+        const fPrice = parseFloat(document.getElementById("f-price").value);
+        const fSqm = parseFloat(document.getElementById("f-sqm").value);
+        const fArea = document.getElementById("f-area").value.toLowerCase();
 
+        const filtered = flats.filter(x => {
             return (!fPrice || x.pricePLN <= fPrice) &&
-                (!fSqm || (x.sqm || 0) >= fSqm) &&
-                (!fArea || x.area.toLowerCase().includes(fArea)) &&
-                (!fRooms || (x.rooms || 0) >= fRooms);
+                (!fSqm || x.sqm >= fSqm) &&
+                (!fArea || x.area.toLowerCase().includes(fArea));
         });
 
-        renderTable(filtered);
-        renderMarkers(filtered);
-    }
-
-    function renderTable(items) {
         elTbody.innerHTML = "";
-        items.forEach(x => {
-            const pricePerMeter = x.sqm ? Math.round(x.pricePLN / x.sqm) : "-";
+        markers.clearLayers();
+
+        filtered.forEach(x => {
+            const pricePerM = x.sqm ? Math.round(x.pricePLN / x.sqm) : 0;
+            const avgRate = ((x.rate_loc + x.rate_apt + x.rate_price) / 3).toFixed(1);
+
+            // Dodaj marker
+            L.marker([x.lat, x.lng]).addTo(markers).bindPopup(`<b>${x.pricePLN.toLocaleString()} zł</b><br>${x.area}`);
+
             const tr = document.createElement("tr");
             tr.innerHTML = `
-                <td class="price-tag">${formatPLN(x.pricePLN)}</td>
-                <td class="sqm-price">${pricePerMeter} zł/m²</td>
-                <td>${x.sqm || "-"} m²</td>
+                <td class="sticky-col highlight">${x.pricePLN.toLocaleString()} zł</td>
+                <td>${x.sqm} m²</td>
+                <td style="color:#94a3b8">${pricePerM} zł/m²</td>
+                <td>${x.rooms}</td>
+
                 <td>${x.area}</td>
-                <td><span class="room-badge">${x.rooms || "?"} pok.</span></td>
-                <td style="color:#64748b">${x.phone || "brak"}</td>
-                <td><a href="${x.url}" target="_blank" class="btn-link">Otwórz ↗</a></td>
+                <td>${x.floor || '-'}</td>
+                <td>${x.year || '-'}</td>
+                <td>${x.condition || '-'}</td>
+                <td>${x.rent || '-'} zł</td>
+                <td>${x.ownership || '-'}</td>
+                <td>${x.kw || '-'}</td>
+
+                <td>${x.balcony === 'Tak' ? '🏙️' : ''} ${x.parking ? '🚗' : ''}</td>
+                <td title="${x.minusy}">${x.plusy.substring(0,12)}...</td>
+                <td>${"⭐".repeat(x.rate_loc)}</td>
+                <td>${"⭐".repeat(x.rate_apt)}</td>
+                <td>${"⭐".repeat(x.rate_price)}</td>
+                <td class="highlight" style="background:#eff6ff">${avgRate}</td>
+
+                <td><span class="badge badge-status">${x.status}</span></td>
+                <td>${x.contact_type || '-'}</td>
+                <td>${x.negotiable || '-'}</td>
+                <td><a href="${x.url}" target="_blank" style="color:var(--primary)">Otwórz ↗</a></td>
             `;
-            tr.onclick = (e) => {
-                if(e.target.tagName !== 'A') map.setView([x.lat, x.lng], 15);
-            };
+            tr.onclick = (e) => { if(e.target.tagName !== 'A') map.setView([x.lat, x.lng], 15); };
             elTbody.appendChild(tr);
         });
     }
 
-    function renderMarkers(items) {
-        markersLayer.clearLayers();
-        items.forEach(x => {
-            if (x.lat && x.lng) {
-                const popup = `
-                    <div style="font-family:'Inter', sans-serif">
-                        <b>${x.title}</b><br>
-                        <span style="color:#4f46e5; font-weight:700">${formatPLN(x.pricePLN)}</span>
-                    </div>
-                `;
-                L.marker([x.lat, x.lng]).bindPopup(popup).addTo(markersLayer);
-            }
-        });
-    }
-
-    // Eventy
-    Object.values(filters).forEach(i => i.addEventListener("input", render));
-    elReset.addEventListener("click", () => {
-        Object.values(filters).forEach(i => i.value = "");
+    document.querySelectorAll("input").forEach(i => i.addEventListener("input", render));
+    document.getElementById("reset-filters").onclick = () => {
+        document.querySelectorAll("input").forEach(i => i.value = "");
         render();
-    });
-
-    function formatPLN(n) { return new Intl.NumberFormat("pl-PL", { style: "currency", currency: "PLN", maximumFractionDigits: 0 }).format(n); }
+    };
 
     render();
 })();

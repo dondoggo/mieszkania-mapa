@@ -1,14 +1,24 @@
 window.FLATS = [
     {
-        id: "m1",
-        title: "Mieszkanie na Mokotowie",
-        area: "Warszawa, Mokotów",
-        pricePLN: 4500,
-        sqm: 50,       // Powierzchnia
-        rooms: 2,      // Pokoje
-        phone: "500-xxx-xxx",
-        lat: 52.19,
-        lng: 21.02,
+        pricePLN: 720000,
+        sqm: 52,
+        rooms: 3,
+        area: "Warszawa, Wola",
+        floor: "2/10",
+        year: 1980,
+        condition: "Do odświeżenia",
+        rent: 750,
+        ownership: "Pełna",
+        kw: "Tak",
+        balcony: "Tak",
+        parking: "Ulica",
+        plusy: "Świetna lokalizacja, blisko metro",
+        minusy: "Stara winda",
+        rate_loc: 5, rate_apt: 3, rate_price: 4,
+        status: "Do obejrzenia",
+        contact_type: "Agent",
+        negotiable: "Możliwe",
+        lat: 52.235, lng: 20.985,
         url: "https://www.otodom.pl/..."
     }
 ];

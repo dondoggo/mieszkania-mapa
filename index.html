@@ -2,45 +2,71 @@
 <html lang="pl">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mieszkania | Panel Analityczny</title>
+    <title>Property Analyzer Pro</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="app-container">
-    <aside class="map-wrapper">
+<div class="dashboard">
+    <section class="map-card">
         <div id="map"></div>
-    </aside>
+    </section>
 
-    <main class="data-wrapper">
+    <section class="data-card">
+        <div class="table-actions">
+            <h2>Twoja Lista Mieszkań</h2>
+            <button id="reset-filters">Wyczyść filtry</button>
+        </div>
+
         <div class="table-container">
             <table>
                 <thead>
-                <tr class="header-labels">
-                    <th style="width: 140px">Cena</th>
-                    <th style="width: 120px">Cena / m²</th>
-                    <th style="width: 100px">Powierzchnia</th>
-                    <th>Dzielnica / Okolica</th>
-                    <th style="width: 90px">Pokoje</th>
-                    <th style="width: 140px">Telefon</th>
-                    <th style="width: 100px">Akcja</th>
+                <tr class="section-headers">
+                    <th colspan="4" class="s-basic">Podstawowe</th>
+                    <th colspan="7" class="s-tech">Techniczne & Formalne</th>
+                    <th colspan="6" class="s-rating">🧠 Ocena & Decyzja</th>
+                    <th colspan="4" class="s-org">📞 Organizacyjne</th>
                 </tr>
-                <tr class="header-filters">
-                    <th><input type="number" id="f-price" placeholder="Max PLN..."></th>
-                    <th></th> <th><input type="number" id="f-sqm" placeholder="Min m²..."></th>
-                    <th><input type="text" id="f-area" placeholder="Szukaj lokalizacji..."></th>
-                    <th><input type="number" id="f-rooms" placeholder="Min..."></th>
+                <tr class="column-names">
+                    <th class="sticky-col">Cena</th>
+                    <th>m²</th>
+                    <th>zł/m²</th>
+                    <th>Pokoje</th>
+
+                    <th>Lokalizacja</th>
+                    <th>Piętro</th>
+                    <th>Rok</th>
+                    <th>Stan</th>
+                    <th>Czynsz</th>
+                    <th>Własność</th>
+                    <th>KW</th>
+
+                    <th>Balkon/Park.</th>
+                    <th>Plusy/Minusy</th>
+                    <th>Lokal. (1-5)</th>
+                    <th>Mieszk. (1-5)</th>
+                    <th>Cena (1-5)</th>
+                    <th class="highlight">Łączna</th>
+
+                    <th>Status</th>
+                    <th>Kontakt</th>
+                    <th>Negocj.</th>
+                    <th>Link</th>
+                </tr>
+                <tr class="filter-row">
+                    <th class="sticky-col"><input type="number" id="f-price" placeholder="Max PLN"></th>
+                    <th><input type="number" id="f-sqm" placeholder="Min m²"></th>
                     <th></th>
-                    <th><button id="reset-filters">Resetuj</button></th>
+                    <th><input type="number" id="f-rooms" placeholder="Pokoje"></th>
+                    <th><input type="text" id="f-area" placeholder="Szukaj..."></th>
+                    <th colspan="16"></th>
                 </tr>
                 </thead>
-                <tbody id="tbody">
-                </tbody>
+                <tbody id="tbody"></tbody>
             </table>
         </div>
-    </main>
+    </section>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
