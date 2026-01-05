@@ -3,59 +3,41 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mieszkania Tracker Pro</title>
+    <title>Mieszkania</title>
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<header class="main-header">
-    <div class="wrap header-content">
-        <div>
-            <h1>Twoje Mieszkania</h1>
-            <p class="sub">Zarządzaj i porównuj wybrane oferty nieruchomości</p>
-        </div>
-        <div id="stats-bar" class="stats-bar">
-        </div>
-    </div>
-</header>
-
-<main class="wrap main-grid">
-    <aside class="sidebar">
-        <section class="panel filter-panel">
-            <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg> Filtrowanie</h3>
-            <div class="controls">
-                <div class="control-group">
-                    <label for="q">Szukaj</label>
-                    <input id="q" type="search" placeholder="Mokotów, 2 pokoje..." />
-                </div>
-                <div class="control-group">
-                    <label for="maxPrice">Cena do (PLN)</label>
-                    <input id="maxPrice" type="number" placeholder="np. 4000" />
-                </div>
-                <div class="control-group">
-                    <label for="sort">Sortowanie</label>
-                    <select id="sort">
-                        <option value="price_asc">Najtańsze</option>
-                        <option value="price_desc">Najdroższe</option>
-                        <option value="title_asc">Nazwa A-Z</option>
-                    </select>
-                </div>
-                <button id="reset" class="btn-secondary">Resetuj filtry</button>
-            </div>
-        </section>
-
-        <section class="listings-panel">
-            <div class="panel-header">
-                <span id="count" class="count-badge">0 ofert</span>
-            </div>
-            <div id="listings-container" class="cards-stack">
-            </div>
-        </section>
-    </aside>
-
-    <section class="map-container">
+<main class="app-container">
+    <section id="map-section">
         <div id="map"></div>
+    </section>
+
+    <section id="list-section">
+        <div class="table-wrapper">
+            <table id="flats-table">
+                <thead>
+                <tr class="column-names">
+                    <th>Cena</th>
+                    <th>Cena/m²</th>
+                    <th>Powierzchnia</th>
+                    <th>Dzielnica</th>
+                    <th>Pokoje</th>
+                    <th>Telefon</th>
+                    <th>Link</th>
+                </tr>
+                <tr class="filter-row">
+                    <td><input type="number" id="f-price" placeholder="Max cena..."></td>
+                    <td></td> <td><input type="number" id="f-sqm" placeholder="Min m²..."></td>
+                    <td><input type="text" id="f-area" placeholder="Szukaj dzielnicy..."></td>
+                    <td><input type="number" id="f-rooms" placeholder="Min pokoi..."></td>
+                    <td></td>
+                    <td><button id="reset-filters">Reset</button></td>
+                </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
     </section>
 </main>
 
