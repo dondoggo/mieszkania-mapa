@@ -1,0 +1,104 @@
+:root {
+    --border: #e5e7eb;
+    --text: #111827;
+    --muted: #6b7280;
+    --bg: #ffffff;
+    --panel: #f9fafb;
+}
+
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+}
+
+.wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
+h1 { margin: 8px 0 4px; font-size: 24px; }
+.sub { margin: 0; color: var(--muted); }
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+.panel, .mapPanel {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--panel);
+    overflow: hidden;
+}
+
+.controls {
+    display: grid;
+    gap: 10px;
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+}
+.controls label { display: grid; gap: 6px; font-size: 14px; }
+.controls input, .controls select {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    background: #fff;
+}
+.controls button {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.hint {
+    padding: 10px 12px;
+    color: var(--muted);
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+}
+
+.tableWrap { background: #fff; }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+}
+tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    font-size: 14px;
+}
+tbody tr:hover { background: #f3f4f6; cursor: pointer; }
+.num { text-align: right; white-space: nowrap; }
+
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+#map { height: 520px; width: 100%; background: #fff; }
+.mapFooter {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border-top: 1px solid var(--border);
+    background: #fff;
+    font-size: 13px;
+}
+.muted { color: var(--muted); }
+
+@media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr; }
+    #map { height: 420px; }
+}
